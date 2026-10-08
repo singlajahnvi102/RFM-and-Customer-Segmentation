@@ -1,35 +1,51 @@
 ### Section 4: Segmentation
 -- 1. Which are Champions,Loyal, Potential Loyalists, At Risk, and Lost?
-Create view Customer_segmentation as SELECT 
-    customerkey,
-    recency_days_score,
-    frequency_score,
-    monetary_score,
+USE global_electronics;
+
+DROP VIEW IF EXISTS Customer_segmentation;
+
+CREATE VIEW Customer_segmentation AS
+
+SELECT
+    c.customerkey,
+    r.recency_days_score,
+    r.frequency_score,
+    r.monetary_score,
+
     CASE
-        WHEN
-            recency_days_score >= 4
-                AND frequency_score >= 4
-        THEN
-            'Champions'
-        WHEN
-            recency_days_score >= 3
-                AND frequency_score >= 3
-        THEN
-            'Loyal'
-        WHEN
-            recency_days_score >= 3
-                AND frequency_score >= 1
-        THEN
-            'Potential_Loyalist'
-        WHEN
-            recency_days_score <= 2
-                AND frequency_score >= 3
-        THEN
-            'At_Risk'
+
+        -- Customers with no purchase history
+        WHEN r.customerkey IS NULL
+            THEN 'Never_Purchased'
+
+        -- Champions
+        WHEN r.recency_days_score >= 4
+             AND r.frequency_score >= 4
+            THEN 'Champions'
+
+        -- Loyal
+        WHEN r.recency_days_score >= 3
+             AND r.frequency_score >= 3
+            THEN 'Loyal'
+
+        -- Potential Loyalists
+        WHEN r.recency_days_score >= 3
+            THEN 'Potential_Loyalist'
+
+        -- At Risk
+        WHEN r.recency_days_score <= 2
+             AND r.frequency_score >= 3
+            THEN 'At_Risk'
+
+        -- Lost
         ELSE 'Lost'
-    END customer_segmentation
-FROM
-    rfm_scored;
+
+    END AS customer_segmentation
+
+FROM customers c
+
+LEFT JOIN rfm_score r
+    ON c.customerkey = r.customerkey;
     
 -- The CASE conditions run from the top and the first true one wins, so their order matters.
 -- Monetary score is kept as a second layer to prioritise who gets personal outreach.

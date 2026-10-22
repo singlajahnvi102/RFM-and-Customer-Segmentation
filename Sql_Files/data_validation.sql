@@ -159,6 +159,7 @@ FROM
     customers;
 -- The ans is different from claude due to different accents
 
+--- 17. What are total revenue and profit by year? *(2021 is only about 7 weeks, so exclude it from year comparisons)*
 SELECT 
     YEAR(s.order_date) AS order_year,
     ROUND(SUM(s.quantity * p.unit_price_usd), 2) AS revenue,

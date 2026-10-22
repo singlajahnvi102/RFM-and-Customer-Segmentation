@@ -49,7 +49,7 @@ I also asked Claude to act as the company's data expert and explain every column
 11. Does every sale have a matching exchange rate for its currency and date? *(Yes, 0 missing)*
 12. Does each customer country map to a single currency? *(Yes)*
 13. Are there any products where price is less than or equal to cost? *(0)*
-14. What is the average profit margin across products? *(about 59%, unusually high)*
+14. What is the sales-weighted profit margin? *(about 59%, unusually high)*
 15. How many customers have a na `State Code`, and where are they from? *(10, all Napoli, Italy)*
 16. How many customer names appear more than once? *(148, so never dedupe by name)*
 17. What are total revenue and profit by year? *(2021 is only about 7 weeks, so exclude it from year comparisons)*

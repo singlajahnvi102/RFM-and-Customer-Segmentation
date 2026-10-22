@@ -1,4 +1,4 @@
-use global_electronics;
+        use global_electronics;
 -- 1. How many rows are in each table? *(Sales 62,884, Customers 15,266, Products 2,517, Stores 67)*
 SELECT 
     COUNT(*)
@@ -135,7 +135,7 @@ WHERE
     unit_price_usd <= unit_cost_usd;
 
 
--- -- 14. What is the average profit margin across products? *(about 59%, unusually high)*
+-- -- 14. "What is the sales-weighted profit margin?? *(about 59%, unusually high)*
 SELECT 
     ROUND(SUM(s.quantity * (p.unit_price_usd - p.unit_cost_usd)) * 100 / SUM(s.quantity * p.unit_price_usd),
             2) AS weighted_margin_pct
